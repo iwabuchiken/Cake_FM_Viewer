@@ -10,6 +10,22 @@ class NodesController extends AppController {
 	public function 
 	index() {
 
+		$nodes = $this->Node->find('all');
+		
+		debug("count => ".count($nodes));
+
+		/*******************************
+			load xml
+		*******************************/
+		$filename = "http://benfranklin.chips.jp/FM/Research_2/Research_2.mm";
+		
+		$fm_Tree = Utils::get_FM_Tree__V2($filename);
+// 		$fm_Tree = Utils::get_FM_Tree($filename);
+		
+		debug($fm_Tree);
+		
+// 		$this->show_mm__V2();
+// 		$this->show_mm();
 		
 	}//index()
 
@@ -352,31 +368,319 @@ class NodesController extends AppController {
 	public function
 	show_mm() {
 		
-		$fname = "../Lib/data/Research_2.mm";
+		$fname = "http://benfranklin.chips.jp/FM/Research_2/Research_2.mm";
+// 		$fname = "../Lib/data/Research_2.mm";
 // 		$fname = "Research_2.mm";
 		
-		$f = fopen($fname, "r");
+// 		$f = fopen($fname, "r");
 		
 		
-		if ($f == null) {
+// 		if ($f == null) {
 			
-			debug("file => null");
+// 			debug("file => null");
 			
-			return;
+// 			return;
 			
-		}//$f == null
+// 		}//$f == null
 		
-		fclose($f);
+// 		fclose($f);
 		
-		debug("file => closed");
+// 		debug("file => closed");
 		
 		/*******************************
 			load xml file
 		*******************************/
 		$xml=simplexml_load_file($fname) or die("Error: Cannot create object");
 		
-		debug($xml);
+		debug("class => ".get_class($xml));
+		
+		debug(count($xml));
+		debug(count($xml->children()));
+// 		debug(count($xml->children()->text));
+		debug(count($xml->children()->children()));		//=> (int) 3
+
+		$attr = $xml->children()->attributes();
+		
+		debug($attr);
+		// 		object(SimpleXMLElement) {
+		// 			@attributes => array(
+		// 					'CREATED' => '1353658279906',
+		// 					'ID' => 'ID_936318891',
+		// 					'MODIFIED' => '1436688595942',
+		// 					'TEXT' => 'Research_2'
+		// 			)
+		// 		}
+		
+		//ref asXML http://stackoverflow.com/questions/3690942/simplexml-to-string answered Sep 11 '10 at 13:11
+		debug($attr->asXML());		//=> ' CREATED="1353658279906"'
+		debug(strip_tags($attr->asXML()));		//=> ' CREATED="1353658279906"'
+		
+		debug((string)$attr);		//=> '1353658279906'
+		
+		
+// 		debug($attr->TEXT);		//=> empty
+// 		debug($attr->text);	//=> null
+		
+		debug("attributes => ".count($attr));
+		
+		//ref http://php.net/manual/en/simplexmlelement.attributes.php
+		foreach ($attr as $key => $val) {
+		
+			debug("$key => $val");
+			
+		}//foreach ($attr as $key => $val)
+
+		//ref http://stackoverflow.com/questions/3690942/simplexml-to-string answered Nov 23 '12 at 20:33
+		foreach ($attr as $a) {
+		
+// 			debug($a);		//=> 'CREATED => 1353658279906'
+
+			debug((string)$a);		//=> '1353658279906'
+			
+		}//foreach ($attr as $key => $val)
+		
+		//ref http://stackoverflow.com/questions/1652128/accessing-attribute-from-simplexml answered Sep 26 '12 at 10:57
+		debug($attr->Token);	//=> null
+
+		/*******************************
+			key: POSITION?
+		*******************************/
+		if (isset($attr['POSITION'])) {
+		
+			debug("POSITION => set: ".$attr['POSITION']);
+		
+		} else {
+		
+			debug("POSITION => NOT set");
+			
+		}//if (isset($attr['POSITION']))
+		
+		
+		
+// 		debug($xml->children()->attributes()->text);	//=> null
+// 		debug($xml->children()->attributes());
+// 		debug($xml->children());
+// 		debug($xml->node[0]);
+		
+// 		debug($xml);
 		
 	}//show_mm
+	
+	public function
+	show_mm__V2() {
+		
+		/*******************************
+			load xml file
+		*******************************/
+		$fname = "http://benfranklin.chips.jp/FM/Research_2/Research_2.mm";
+		
+		$xml=simplexml_load_file($fname) or die("Error: Cannot create object");
+
+		/*******************************
+			1st order
+		*******************************/
+		$o1s = $xml->children();
+
+		$o1s_attrs = $o1s->attributes();
+		
+		debug($o1s_attrs);
+		
+		if (isset($o1s['TEXT'])) {
+		
+			debug("TEXT => ".$o1s['TEXT']);
+		
+		} else {
+		
+			debug("TEXT => NOT set");
+			
+		}//if (isset($o1s['text']))
+		
+		if (isset($attrs->text)) {
+// 		if (isset($attrs['TEXT'])) {
+		
+			debug("TEXT => ".$attrs->text);
+// 			debug("TEXT => ".$attrs['TEXT']);
+		
+		} else {
+		
+			debug("TEXT => NOT set");
+			
+		}//if (isset($attrs['text']))
+		
+		/*******************************
+			get: attributes => o1s
+		*******************************/
+		$attrs_o1s = array();
+
+		$tmp = array();
+		
+		foreach ($o1s_attrs as $k => $v) {
+		
+			$tmp[$k] = (string)$v;
+// 			$attrs_o1s[$k] = (string)$v;
+			
+// 			$attrs_o1s[$k] = $v;	//=> object(SimpleXMLElement) {
+		
+// 	}
+			
+		}//foreach ($o1s_attrs as $k => $v)
+		
+		// serial number
+		$tmp['sn'] = "g1-0";
+		
+		array_push($attrs_o1s, $tmp);
+		
+		debug($attrs_o1s);
+
+		/*******************************
+			attributes: main
+		*******************************/
+		$attr_main = array();
+		
+		$attr_main["g1"] = $attrs_o1s;
+		
+		/*******************************
+		 order: 2nd
+		*******************************/
+		$o2s = $o1s->children();
+		
+		$len_o2s = count($o2s);
+		
+		debug("o2s => ".$len_o2s);
+// 		debug("o2s => ".count($o2s));	//=> 3
+// 		debug($o2s);
+
+		debug("o2s: nodes => ".count($o2s->node));	//=> 3
+		debug("o2s: nodes => ".count($o2s->node[0]));	//=> 4
+		
+// 		debug($o1s);	//=> w
+
+		/*******************************
+		 get: attributes => o2s
+		*******************************/
+		$attrs_o2s = array();
+		
+		$count = 0;
+		
+		foreach ($o2s as $child) {
+		
+			$tmp_attrs = $child->attributes();
+			
+			debug($tmp_attrs);
+// 			debug($child->attributes());	//=> w
+
+			$tmp = array();
+			
+			foreach ($tmp_attrs as $k => $v) {
+			
+				$tmp[$k] = (string)$v;
+// 				$tmp[$k] = $v;	//=> ''
+				
+			}//foreach ($tmp_attrs as $a)
+			
+			$tmp['sn'] = "g1-0*g2-$count";
+// 			$tmp['sn'] = "g2-$count";
+			
+			$count ++;
+			
+			array_push($attrs_o2s, $tmp);
+			
+// 			debug((string)$child);	//=> ''
+// 			debug($child);
+			
+		}//foreach ($o2s as $child)
+		
+		debug($attrs_o2s);
+		
+		// push to the main attributes
+		$attr_main["g2"] = $attrs_o2s;
+		
+		
+		debug($attr_main);
+		
+// 		for ($i = 0; $i < $len_o2s; $i++) {
+		
+// // 			$child = $o2s->children[$i];
+			
+// // 			$tmp_attrs = $child->attributes();
+			
+// // 			debug("o2s: child $i");
+			
+// // 			debug($tmp_attrs);
+			
+// 		}//for ($i = 0; $i < $len_o2s; $i++)
+		
+		
+// 		debug(count($xml));
+// 		debug(count($xml->children()));
+// // 		debug(count($xml->children()->text));
+// 		debug(count($xml->children()->children()));		//=> (int) 3
+
+// 		$attr = $xml->children()->attributes();
+		
+// 		debug($attr);
+// 		// 		object(SimpleXMLElement) {
+// 		// 			@attributes => array(
+// 		// 					'CREATED' => '1353658279906',
+// 		// 					'ID' => 'ID_936318891',
+// 		// 					'MODIFIED' => '1436688595942',
+// 		// 					'TEXT' => 'Research_2'
+// 		// 			)
+// 		// 		}
+		
+// 		//ref asXML http://stackoverflow.com/questions/3690942/simplexml-to-string answered Sep 11 '10 at 13:11
+// 		debug($attr->asXML());		//=> ' CREATED="1353658279906"'
+// 		debug(strip_tags($attr->asXML()));		//=> ' CREATED="1353658279906"'
+		
+// 		debug((string)$attr);		//=> '1353658279906'
+		
+		
+// // 		debug($attr->TEXT);		//=> empty
+// // 		debug($attr->text);	//=> null
+		
+// 		debug("attributes => ".count($attr));
+		
+// 		//ref http://php.net/manual/en/simplexmlelement.attributes.php
+// 		foreach ($attr as $key => $val) {
+		
+// 			debug("$key => $val");
+			
+// 		}//foreach ($attr as $key => $val)
+
+// 		//ref http://stackoverflow.com/questions/3690942/simplexml-to-string answered Nov 23 '12 at 20:33
+// 		foreach ($attr as $a) {
+		
+// // 			debug($a);		//=> 'CREATED => 1353658279906'
+
+// 			debug((string)$a);		//=> '1353658279906'
+			
+// 		}//foreach ($attr as $key => $val)
+		
+// 		//ref http://stackoverflow.com/questions/1652128/accessing-attribute-from-simplexml answered Sep 26 '12 at 10:57
+// 		debug($attr->Token);	//=> null
+
+// 		/*******************************
+// 			key: POSITION?
+// 		*******************************/
+// 		if (isset($attr['POSITION'])) {
+		
+// 			debug("POSITION => set: ".$attr['POSITION']);
+		
+// 		} else {
+		
+// 			debug("POSITION => NOT set");
+			
+// 		}//if (isset($attr['POSITION']))
+		
+		
+		
+// 		debug($xml->children()->attributes()->text);	//=> null
+// 		debug($xml->children()->attributes());
+// 		debug($xml->children());
+// 		debug($xml->node[0]);
+		
+// 		debug($xml);
+		
+	}//show_mm__V2
 	
 }//class ArticlesController extends AppController
