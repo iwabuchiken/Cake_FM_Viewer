@@ -219,15 +219,26 @@
 		'defaults' => 'php'
 	));
 
-/**
- * A random string used in security hashing methods.
- */
-	Configure::write('Security.salt', 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi');
+	//ref http://henkan.jp/cakephp/salt
+	/**
+	 * A random string used in security hashing methods.
+	 */
+	Configure::write('Security.salt', 'A604SyEc5ghBRQp9nH2X4PQ0tuG7UPtu7gfVEFcW');
+	
+	/**
+	 * A random numeric string (digits only) used to encrypt/decrypt strings.
+	*/
+	Configure::write('Security.cipherSeed', '49797092006556954607994623245');
+	
+// /**
+//  * A random string used in security hashing methods.
+//  */
+// 	Configure::write('Security.salt', 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi');
 
-/**
- * A random numeric string (digits only) used to encrypt/decrypt strings.
- */
-	Configure::write('Security.cipherSeed', '76859309657453542496749683645');
+// /**
+//  * A random numeric string (digits only) used to encrypt/decrypt strings.
+//  */
+// 	Configure::write('Security.cipherSeed', '76859309657453542496749683645');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
