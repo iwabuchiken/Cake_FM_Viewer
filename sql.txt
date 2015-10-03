@@ -1,0 +1,89 @@
+#pushd C:\WORKS\WS\Eclipse_Kepler\Cake_NR5\app\webroot
+#sqlite3 C:\WORKS\WS\Eclipse_Kepler\Cake_NR5\app\webroot\development.sqlite3
+
+sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3
+.explain on
+.tables
+
+pragma table_info(tweets);
+
+.exit
+
+sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3 "pragma integrity_check"
+sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3 "reindex nodes"
+
+//REF http://www.dosomethinghere.com/2013/02/20/fixing-the-sqlite-error-the-database-disk-image-is-malformed/
+//REF referer http://stackoverflow.com/questions/22623865/sqlite-database-disk-image-is-malformed answered May 28 '14 at 4:56
+.mode insert
+.output dump_all.sql
+.dump
+.exit
+
+copy dev.db C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3
+
+SELECT * FROM tweets;
+SELECT _id,text FROM tweets;
+
+
+[sqlite3]======================================
+CREATE TABLE nodes (
+	id				INTEGER PRIMARY KEY AUTOINCREMENT	NOT NULL,
+	created_at		VARCHAR(30),
+	modified_at		VARCHAR(30),
+	
+	text			TEXT,
+	
+	node_id			INTEGER,
+	node_created_at	VARCHAR(30),
+	node_modified_at	VARCHAR(30),
+	
+	icon			VARCHAR(30)
+	
+);
+
+DROP TABLE nodes;
+DROP TABLE nodes_old;
+
+#REF http://stackoverflow.com/questions/4253804/insert-new-column-into-table-in-sqlite answered Nov 23 '10 at 7:59
+ALTER TABLE nodes RENAME TO nodes_old;
+
+INSERT INTO nodes 
+		() 
+	SELECT
+		
+	FROM tweets_old;
+
+SELECT * FROM tweets;
+
+
+[mysql(lollipop)]======================================
+CREATE TABLE nodes (
+	id				INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	created_at		VARCHAR(30),
+	modified_at		VARCHAR(30),
+	
+	text			TEXT,
+	
+	node_id			INTEGER,
+	node_created_at	VARCHAR(30),
+	node_modified_at	VARCHAR(30),
+	
+	icon			VARCHAR(30)
+	
+);
+
+DROP TABLE nodes;
+DROP TABLE nodes_old;
+
+DELETE FROM `nodes` WHERE id > 1;
+
+#REF http://stackoverflow.com/questions/4253804/insert-new-column-into-table-in-sqlite answered Nov 23 '10 at 7:59
+ALTER TABLE nodes RENAME TO nodes_old;
+
+INSERT INTO nodes 
+		() 
+	SELECT
+		
+	FROM nodes_old;
+
+SELECT * FROM nodes;
