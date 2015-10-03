@@ -1,16 +1,16 @@
-#pushd C:\WORKS\WS\Eclipse_Kepler\Cake_NR5\app\webroot
-#sqlite3 C:\WORKS\WS\Eclipse_Kepler\Cake_NR5\app\webroot\development.sqlite3
+#pushd C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\webroot
+#sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\webroot\development.sqlite3
 
-sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3
+sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\webroot\development.sqlite3
 .explain on
 .tables
 
-pragma table_info(tweets);
+pragma table_info(nodes);
 
 .exit
 
-sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3 "pragma integrity_check"
-sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3 "reindex nodes"
+sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\webroot\development.sqlite3 "pragma integrity_check"
+sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\webroot\development.sqlite3 "reindex nodes"
 
 //REF http://www.dosomethinghere.com/2013/02/20/fixing-the-sqlite-error-the-database-disk-image-is-malformed/
 //REF referer http://stackoverflow.com/questions/22623865/sqlite-database-disk-image-is-malformed answered May 28 '14 at 4:56
@@ -19,7 +19,7 @@ sqlite3 C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3 "reind
 .dump
 .exit
 
-copy dev.db C:\WORKS\WS\Eclipse_Luna\Cake_TA2\app\webroot\development.sqlite3
+copy dev.db C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\webroot\development.sqlite3
 
 SELECT * FROM tweets;
 SELECT _id,text FROM tweets;
