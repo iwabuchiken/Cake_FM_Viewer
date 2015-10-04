@@ -3170,6 +3170,129 @@
 			
 		}//get_FM_Tree_G1S__V2($filename)
 		
+		public static function
+		get_FM_Tree_GetChildren
+		($node, $attrs_parent, $numOf_nodes) {
+
+			/*******************************
+			 1st order
+			*******************************/
+			$new_nodes = $node->children();
+				
+			$attrs_new_nodes = $node->attributes();
+				
+			/*******************************
+			 get: attributes => o1s
+			*******************************/
+			$attrs_new_nodes_ary = array();
+				
+			$tmp = array();
+				
+			foreach ($attrs_new_nodes as $k => $v) {
+					
+				$tmp[$k] = (string)$v;
+					
+			}//foreach ($attrs_new_nodes as $k => $v)
+				
+			/*******************************
+				serial number
+			*******************************/
+			$parent_sn = $attrs_parent['sn'];
+			
+			$tmp['sn'] = Utils::fm_Get_SN($parent_sn, $numOf_nodes);
+// 			$tmp['sn'] = Utils::fm_Get_SN($parent_gen, $numOf_nodes);
+			
+// 			debug($parent_sn);
+			
+// 			$parent_gen = explode("-", $parent_sn)[0];
+// // 			$parent_gen = explode($parent_sn, "-")[0];	//=> 'g1'
+			
+// 			debug("parent_gen => ".$parent_gen);
+			
+// 			debug($parent_gen);
+			
+// 			$parent_gen_num = substr($parent_gen, 1, strlen($parent_gen) - 1);
+			
+// 			debug($parent_gen_num);
+			
+// 			$parent_gen_num_int = (int) $parent_gen_num;
+			
+			
+// 			$tmp['sn'] = "$parent_sn*g".($parent_gen_num_int + 1)."-$numOf_nodes";
+// // 			$tmp['sn'] = "$parent_sn-$numOf_nodes";	//=> 'sn' => 'g1-0-0'
+// // 			$tmp['sn'] = "g1-$numOf_nodes";
+				
+// 			array_push($attrs_new_nodes_ary, $tmp);
+
+			$attrs_new_nodes_ary['attributes'] = $tmp;
+			
+			/*******************************
+				get: children
+			*******************************/
+			$children = $node->children();
+
+			$children_ary = array();
+			
+			$count = 0;
+			
+			foreach ($children as $c) {
+			
+				array_push($children_ary, $c);
+				
+			}//foreach ($children as $c)
+			
+			$attrs_new_nodes_ary['children'] = $children_ary;
+// 			$attrs_new_nodes_ary['children'] = $children;
+			
+			/*******************************
+				return
+			*******************************/
+			return $attrs_new_nodes_ary;
+			
+		}//get_FM_Tree_GetChildren($node, $attrs_parent)
+
+		public static function
+		fm_Get_SN($parent_sn, $numOf_nodes) {
+
+			/*******************************
+				explode: '*'
+			*******************************/
+			$sn_tokens = explode("*", $parent_sn);
+			
+			debug($sn_tokens);
+			
+			// get the last token => immediate parent
+			$sn_tokens_Last = $sn_tokens[count($sn_tokens) - 1];
+			
+// 			debug($parent_sn);
+	
+			$tmp_ary = explode("-", $sn_tokens_Last);
+			
+			$parent_gen = $tmp_ary[0];
+// 			$parent_gen = explode("-", $sn_tokens_Last)[0];
+// 			$parent_gen = explode("-", $parent_sn)[0];
+// 			$parent_gen = explode($parent_sn, "-")[0];	//=> 'g1'
+	
+			debug("parent_gen => ".$parent_gen);
+	
+			debug($parent_gen);
+	
+			$parent_gen_num = substr($parent_gen, 1, strlen($parent_gen) - 1);
+	
+			debug($parent_gen_num);
+	
+			$parent_gen_num_int = (int) $parent_gen_num;
+	
+	
+			$tmp['sn'] = "$parent_sn*g".($parent_gen_num_int + 1)."-$numOf_nodes";
+
+			/*******************************
+				return
+			*******************************/
+			return $tmp;
+			
+		}//fm_Get_SN($parent_gen, $numOf_nodes)
+		
 	}//class Utils
 	
 	

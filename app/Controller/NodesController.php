@@ -32,8 +32,8 @@ class NodesController extends AppController {
 // 		debug($fm_Tree);
 
 // 		debug($g1s_set['children']);
-		debug($g1s_set['children'][0]);
-		debug(count($g1s_set['children'][0]));	//=> 4
+// 		debug($g1s_set['children'][0]);
+// 		debug(count($g1s_set['children'][0]));	//=> 4
 		
 		/*******************************
 		 get: g2s
@@ -42,6 +42,46 @@ class NodesController extends AppController {
 		
 		$g1s_set = Utils::get_FM_Tree_G1S($filename);
 		
+		debug("g1s: children => ".count($g1s_set['children']));	//=> 3
+		
+		$node_numb = 0;
+		
+		//debug
+// 		$g1s_set['attributes']['sn'] = "g1-0*g2-0";
+		
+		array_push(
+				$g2s_set, 
+				Utils::get_FM_Tree_GetChildren(
+							$g1s_set['children'][$node_numb], 
+// 							$g1s_set['children'][0], 
+							$g1s_set['attributes'],
+							$node_numb
+		));
+		
+		debug($g2s_set[$node_numb]['attributes']);
+
+// 		debug($g2s_set[0]['attributes']);
+// 		debug($g2s_set['attributes']);
+// 		debug($g2s_set);
+
+		/*******************************
+			children: 1
+		*******************************/
+		$node_numb = 1;
+		
+		//debug
+		// 		$g1s_set['attributes']['sn'] = "g1-0*g2-0";
+		
+		array_push(
+				$g2s_set,
+				Utils::get_FM_Tree_GetChildren(
+						$g1s_set['children'][$node_numb],
+						// 							$g1s_set['children'][0],
+						$g1s_set['attributes'],
+						$node_numb
+		));
+		
+		debug($g2s_set[$node_numb]['attributes']);
 // 		$this->show_mm__V2();
 // 		$this->show_mm();
 		
