@@ -3164,20 +3164,30 @@
 // 			$attrs_g1s_ary['children'] = $children;
 			
 			/*******************************
+				build: final array
+			*******************************/
+			$tmp_ary = array();
+			
+			array_push($tmp_ary, $attrs_g1s_ary);
+			
+			/*******************************
 				return
 			*******************************/
 			return $attrs_g1s_ary;
 			
 		}//get_FM_Tree_G1S__V2($filename)
-		
+
+		/*******************************
+			if the node has no children --> return null
+		*******************************/
 		public static function
-		get_FM_Tree_GetChildren
+		fm_GetTree_Get_Children
 		($node, $attrs_parent, $numOf_nodes) {
 
 			/*******************************
 			 1st order
 			*******************************/
-			$new_nodes = $node->children();
+// 			$new_nodes = $node->children();
 				
 			$attrs_new_nodes = $node->attributes();
 				
@@ -3200,30 +3210,72 @@
 			$parent_sn = $attrs_parent['sn'];
 			
 			$tmp['sn'] = Utils::fm_Get_SN($parent_sn, $numOf_nodes);
-// 			$tmp['sn'] = Utils::fm_Get_SN($parent_gen, $numOf_nodes);
-			
-// 			debug($parent_sn);
-			
-// 			$parent_gen = explode("-", $parent_sn)[0];
-// // 			$parent_gen = explode($parent_sn, "-")[0];	//=> 'g1'
-			
-// 			debug("parent_gen => ".$parent_gen);
-			
-// 			debug($parent_gen);
-			
-// 			$parent_gen_num = substr($parent_gen, 1, strlen($parent_gen) - 1);
-			
-// 			debug($parent_gen_num);
-			
-// 			$parent_gen_num_int = (int) $parent_gen_num;
-			
-			
-// 			$tmp['sn'] = "$parent_sn*g".($parent_gen_num_int + 1)."-$numOf_nodes";
-// // 			$tmp['sn'] = "$parent_sn-$numOf_nodes";	//=> 'sn' => 'g1-0-0'
-// // 			$tmp['sn'] = "g1-$numOf_nodes";
 				
-// 			array_push($attrs_new_nodes_ary, $tmp);
+			$attrs_new_nodes_ary['attributes'] = $tmp;
+			
+			/*******************************
+				get: children
+			*******************************/
+			$children = $node->children();
 
+			$children_ary = array();
+			
+			$count = 0;
+			
+			foreach ($children as $c) {
+			
+				array_push($children_ary, $c);
+				
+			}//foreach ($children as $c)
+			
+			$attrs_new_nodes_ary['children'] = $children;
+// 			$attrs_new_nodes_ary['children'] = $children_ary;
+// 			$attrs_new_nodes_ary['children'] = $children;
+			
+			/*******************************
+				return
+			*******************************/
+			return $attrs_new_nodes_ary;
+			
+		}//fm_GetTree_Get_Children($node, $attrs_parent)
+
+		/*******************************
+			if the node has no children --> return null
+		*******************************/
+		public static function
+		fm_GetTree_Get_Children__FromArray
+		($node, $parent_Node_Attrs, $numOf_nodes) {
+
+			/*******************************
+			 1st order
+			*******************************/
+// 			$new_nodes = $node->children();
+				
+			$attrs_new_nodes = $node['attributes'];
+// 			$attrs_new_nodes = $node->attributes();
+				
+			debug($attrs_new_nodes);
+			
+			/*******************************
+			 get: attributes => o1s
+			*******************************/
+			$attrs_new_nodes_ary = array();
+				
+			$tmp = array();
+				
+			foreach ($attrs_new_nodes as $k => $v) {
+					
+				$tmp[$k] = (string)$v;
+					
+			}//foreach ($attrs_new_nodes as $k => $v)
+				
+			/*******************************
+				serial number
+			*******************************/
+			$parent_sn = $parent_Node_Attrs['sn'];
+			
+			$tmp['sn'] = Utils::fm_Get_SN($parent_sn, $numOf_nodes);
+				
 			$attrs_new_nodes_ary['attributes'] = $tmp;
 			
 			/*******************************
@@ -3249,7 +3301,8 @@
 			*******************************/
 			return $attrs_new_nodes_ary;
 			
-		}//get_FM_Tree_GetChildren($node, $attrs_parent)
+		}//fm_GetTree_Get_Children__FromArray
+		
 
 		public static function
 		fm_Get_SN($parent_sn, $numOf_nodes) {
@@ -3259,7 +3312,7 @@
 			*******************************/
 			$sn_tokens = explode("*", $parent_sn);
 			
-			debug($sn_tokens);
+// 			debug($sn_tokens);
 			
 			// get the last token => immediate parent
 			$sn_tokens_Last = $sn_tokens[count($sn_tokens) - 1];
@@ -3273,25 +3326,74 @@
 // 			$parent_gen = explode("-", $parent_sn)[0];
 // 			$parent_gen = explode($parent_sn, "-")[0];	//=> 'g1'
 	
-			debug("parent_gen => ".$parent_gen);
+// 			debug("parent_gen => ".$parent_gen);
 	
-			debug($parent_gen);
+// 			debug($parent_gen);
 	
 			$parent_gen_num = substr($parent_gen, 1, strlen($parent_gen) - 1);
 	
-			debug($parent_gen_num);
+// 			debug($parent_gen_num);
 	
 			$parent_gen_num_int = (int) $parent_gen_num;
 	
 	
-			$tmp['sn'] = "$parent_sn*g".($parent_gen_num_int + 1)."-$numOf_nodes";
+// 			$tmp['sn'] = "$parent_sn*g".($parent_gen_num_int + 1)."-$numOf_nodes";
 
 			/*******************************
 				return
 			*******************************/
-			return $tmp;
+			return "$parent_sn*g".($parent_gen_num_int + 1)."-$numOf_nodes";
+// 			return $tmp;
 			
 		}//fm_Get_SN($parent_gen, $numOf_nodes)
+
+		/*******************************
+			@return
+			array(attriutes, children(SimpleXMLElement))<br>
+		*******************************/
+		public static function
+		fm_Get_G2S($g1s_set) {
+			
+			$numOf_nodes = count($g1s_set[0]['children']);
+// 			$numOf_nodes = count($g1s_set['children']);
+			
+// 			$node_numb = 0;
+
+			$children = array();
+
+			/*******************************
+				get children
+			*******************************/
+			for ($i = 0; $i < $numOf_nodes; $i++) {
+			
+				array_push(
+					$children,
+					Utils::fm_GetTree_Get_Children(
+						$g1s_set[0]['children'][$i],
+// 						$g1s_set['children'][$i],
+						// 							$g1s_set['children'][0],
+						$g1s_set[0]['attributes'],
+// 						$g1s_set['attributes'],
+						$i
+				));
+				
+			}//for ($i = 0; $i < $numOf_nodes; $i++)
+			
+			/*******************************
+				return
+			*******************************/
+			return $children;
+			
+// 			array_push(
+// 				$g2s_set,
+// 				Utils::get_FM_Tree_GetChildren(
+// 					$parent_Nodes['children'][$node_numb],
+// 					// 							$g1s_set['children'][0],
+// 					$parent_Nodes['attributes'],
+// 					$node_numb
+// 			));
+			
+		}//fm_Get_G2S($g1s_set)
 		
 	}//class Utils
 	

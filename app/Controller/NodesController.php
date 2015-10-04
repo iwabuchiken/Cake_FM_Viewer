@@ -12,81 +12,112 @@ class NodesController extends AppController {
 
 		$nodes = $this->Node->find('all');
 		
-		debug("Nodes: count => ".count($nodes));
+// 		debug("Nodes: count => ".count($nodes));
 
 		/*******************************
-			load xml
+			FM tree
+		*******************************/
+		$this->_index__Get_FM_Tree();
+		
+	}//index()
+
+	public function
+	_index__Get_FM_Tree() {
+
+		/*******************************
+		 load xml
 		*******************************/
 		$filename = "http://benfranklin.chips.jp/FM/Research_2/Research_2.mm";
 		
 		/*******************************
-			get: g1s
+		 get: g1s
 		*******************************/
-		$g1s_set = Utils::get_FM_Tree_G1S($filename);
-// 		$fm_Tree = Utils::get_FM_Tree_G1S($filename);
-// 		$fm_Tree = Utils::get_FM_Tree__V2($filename);
-// 		$fm_Tree = Utils::get_FM_Tree($filename);
-		
-		debug($g1s_set['attributes']);
-// 		debug($g1s_set);
-// 		debug($fm_Tree);
+// 		$g1s_set = Utils::get_FM_Tree_G1S($filename);
+		$g1s_set = array();
 
-// 		debug($g1s_set['children']);
-// 		debug($g1s_set['children'][0]);
-// 		debug(count($g1s_set['children'][0]));	//=> 4
+		array_push($g1s_set, Utils::get_FM_Tree_G1S($filename));
+		
+		// 		$fm_Tree = Utils::get_FM_Tree_G1S($filename);
+		// 		$fm_Tree = Utils::get_FM_Tree__V2($filename);
+		// 		$fm_Tree = Utils::get_FM_Tree($filename);
+
+// 		debug(array_keys($g1s_set));
+		
+		$this->_index__Disp_NodesInfo($g1s_set);
+		
+// 		debug($g1s_set['attributes']);
+// 				debug($g1s_set);
+		// 		debug($fm_Tree);
+		
+		// 		debug($g1s_set['children']);
+		// 		debug($g1s_set['children'][0]);
+		// 		debug(count($g1s_set['children'][0]));	//=> 4
 		
 		/*******************************
 		 get: g2s
 		*******************************/
 		$g2s_set = array();
 		
-		$g1s_set = Utils::get_FM_Tree_G1S($filename);
+		// 		$g1s_set = Utils::get_FM_Tree_G1S($filename);
 		
-		debug("g1s: children => ".count($g1s_set['children']));	//=> 3
+		debug("g1s: children => ".count($g1s_set[0]['children']));	//=> 3
+// 		debug("g1s: children => ".count($g1s_set['children']));	//=> 3
 		
-		$node_numb = 0;
+		$g2s_set = Utils::fm_Get_G2S($g1s_set);
 		
-		//debug
-// 		$g1s_set['attributes']['sn'] = "g1-0*g2-0";
-		
-		array_push(
-				$g2s_set, 
-				Utils::get_FM_Tree_GetChildren(
-							$g1s_set['children'][$node_numb], 
-// 							$g1s_set['children'][0], 
-							$g1s_set['attributes'],
-							$node_numb
-		));
-		
-		debug($g2s_set[$node_numb]['attributes']);
+		debug("g2s_set => obtained: ".count($g2s_set));
 
-// 		debug($g2s_set[0]['attributes']);
-// 		debug($g2s_set['attributes']);
-// 		debug($g2s_set);
-
+		$len_g2s = count($g2s_set);
+		
+		debug("len: g2s => ".$len_g2s);
+		
 		/*******************************
-			children: 1
+			disp: g2s
 		*******************************/
-		$node_numb = 1;
+// 		debug("displaying => g2s");
 		
-		//debug
-		// 		$g1s_set['attributes']['sn'] = "g1-0*g2-0";
-		
-		array_push(
-				$g2s_set,
-				Utils::get_FM_Tree_GetChildren(
-						$g1s_set['children'][$node_numb],
-						// 							$g1s_set['children'][0],
-						$g1s_set['attributes'],
-						$node_numb
-		));
-		
-		debug($g2s_set[$node_numb]['attributes']);
-// 		$this->show_mm__V2();
-// 		$this->show_mm();
-		
-	}//index()
+		$this->_index__Disp_NodesInfo($g2s_set);
 
+// 		debug("\$g2s_set[0]");
+// 		debug($g2s_set[0]);
+		debug($g2s_set[0]['attributes']);
+// 		debug($g2s_set[0]['children']);
+		debug($g2s_set[0]['children'][0]);
+// 		debug($g2s_set[0]['children'][0]->children());
+// 		debug(get_class($g2s_set[0]['children'][0]));
+		
+		/*******************************
+			get: g3s
+		*******************************/
+		$g3s_set = array();
+		
+		$node_Num = 0;
+		
+// 		array_push($g3s_set, 
+// 				Utils::fm_GetTree_Get_Children__FromArray(
+// // 				Utils::fm_GetTree_Get_Children(
+// 						$g2s_set[$node_Num], 
+// // 						$g2s_set[0], 
+// 						$g1s_set[0]['attributes'], 
+// 						$node_Num));
+		
+		
+	}//_index__Get_FM_Tree
+	
+	public function
+	_index__Disp_NodesInfo($nodes_set) {
+
+		$len_set = count($nodes_set);
+		
+		for ($i = 0; $i < $len_set; $i++) {
+		
+			debug($nodes_set[$i]['attributes']);
+// 			debug($nodes_set[$node_numb]['attributes']);
+			
+		}//for ($i = 0; $i < $len_set; $i++)
+		
+	}//_index__Disp_NodesInfo
+	
 	public function 
 	_index__Options() {
 
