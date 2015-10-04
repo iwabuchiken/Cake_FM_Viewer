@@ -3107,6 +3107,68 @@
 			return $attr_main;
 			
 		}//get_FM_Tree__V2
+
+		public static function
+		get_FM_Tree_G1S($filename) {
+
+			/*******************************
+			 load xml file
+			*******************************/
+			$fname = $filename;
+				
+			$xml = simplexml_load_file($fname) or die("Error: Cannot create object");
+				
+			/*******************************
+			 1st order
+			*******************************/
+			$g1s = $xml->children();
+				
+			$attrs_g1s = $g1s->attributes();
+				
+			/*******************************
+			 get: attributes => o1s
+			*******************************/
+			$attrs_g1s_ary = array();
+				
+			$tmp = array();
+				
+			foreach ($attrs_g1s as $k => $v) {
+					
+				$tmp[$k] = (string)$v;
+					
+			}//foreach ($attrs_g1s as $k => $v)
+				
+			// serial number
+			$tmp['sn'] = "g1-0";
+				
+// 			array_push($attrs_g1s_ary, $tmp);
+
+			$attrs_g1s_ary['attributes'] = $tmp;
+			
+			/*******************************
+				get: children
+			*******************************/
+			$children = $g1s->children();
+
+			$children_ary = array();
+			
+			$count = 0;
+			
+			foreach ($children as $c) {
+			
+				array_push($children_ary, $c);
+				
+			}//foreach ($children as $c)
+			
+			$attrs_g1s_ary['children'] = $children_ary;
+// 			$attrs_g1s_ary['children'] = $children;
+			
+			/*******************************
+				return
+			*******************************/
+			return $attrs_g1s_ary;
+			
+		}//get_FM_Tree_G1S__V2($filename)
 		
 	}//class Utils
 	

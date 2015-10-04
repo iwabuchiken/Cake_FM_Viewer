@@ -12,17 +12,35 @@ class NodesController extends AppController {
 
 		$nodes = $this->Node->find('all');
 		
-		debug("count => ".count($nodes));
+		debug("Nodes: count => ".count($nodes));
 
 		/*******************************
 			load xml
 		*******************************/
 		$filename = "http://benfranklin.chips.jp/FM/Research_2/Research_2.mm";
 		
-		$fm_Tree = Utils::get_FM_Tree__V2($filename);
+		/*******************************
+			get: g1s
+		*******************************/
+		$g1s_set = Utils::get_FM_Tree_G1S($filename);
+// 		$fm_Tree = Utils::get_FM_Tree_G1S($filename);
+// 		$fm_Tree = Utils::get_FM_Tree__V2($filename);
 // 		$fm_Tree = Utils::get_FM_Tree($filename);
 		
-		debug($fm_Tree);
+		debug($g1s_set['attributes']);
+// 		debug($g1s_set);
+// 		debug($fm_Tree);
+
+// 		debug($g1s_set['children']);
+		debug($g1s_set['children'][0]);
+		debug(count($g1s_set['children'][0]));	//=> 4
+		
+		/*******************************
+		 get: g2s
+		*******************************/
+		$g2s_set = array();
+		
+		$g1s_set = Utils::get_FM_Tree_G1S($filename);
 		
 // 		$this->show_mm__V2();
 // 		$this->show_mm();
