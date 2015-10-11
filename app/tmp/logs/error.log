@@ -108,3 +108,73 @@ Stack Trace:
 #3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
 #4 [internal function]: App::shutdown()
 #5 {main}
+2015-10-11 07:23:57 Error: Fatal Error (1): Call to undefined function fm_Get_SN() in [C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\Lib\utils\utils.php, line 3618]
+2015-10-11 07:23:57 Error: [FatalErrorException] Call to undefined function fm_Get_SN()
+Request URL: /Eclipse_Luna/Cake_FM_Viewer/nodes
+Stack Trace:
+#0 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(1, 'Call to undefin...', 'C:\\WORKS\\WS\\Ecl...', 3618)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', 'C:\\WORKS\\WS\\Ecl...', 3618, Array)
+#2 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', 'C:\\WORKS\\WS\\Ecl...', 3618, Array)
+#3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2015-10-11 07:26:15 Error: Fatal Error (1): Call to a member function children() on array in [C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\Lib\utils\utils.php, line 3622]
+2015-10-11 07:26:15 Error: [FatalErrorException] Call to a member function children() on array
+Request URL: /Eclipse_Luna/Cake_FM_Viewer/nodes
+Stack Trace:
+#0 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3622)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3622, Array)
+#2 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3622, Array)
+#3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2015-10-11 07:32:25 Error: Fatal Error (1): Call to a member function attributes() on null in [C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\Lib\utils\utils.php, line 3330]
+2015-10-11 07:32:25 Error: [FatalErrorException] Call to a member function attributes() on null
+Request URL: /Eclipse_Luna/Cake_FM_Viewer/nodes
+Stack Trace:
+#0 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3330)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3330, Array)
+#2 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3330, Array)
+#3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2015-10-11 07:35:27 Error: Fatal Error (1): Call to a member function attributes() on null in [C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\Lib\utils\utils.php, line 3330]
+2015-10-11 07:35:27 Error: [FatalErrorException] Call to a member function attributes() on null
+Request URL: /Eclipse_Luna/Cake_FM_Viewer/nodes
+Stack Trace:
+#0 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3330)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3330, Array)
+#2 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', 'C:\\WORKS\\WS\\Ecl...', 3330, Array)
+#3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2015-10-11 07:37:51 Error: Fatal Error (1): Unsupported operand types in [C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\Lib\utils\utils.php, line 3688]
+2015-10-11 07:37:51 Error: [FatalErrorException] Unsupported operand types
+Request URL: /Eclipse_Luna/Cake_FM_Viewer/nodes
+Stack Trace:
+#0 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688)
+#1 [internal function]: ErrorHandler::handleError(1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688, Array)
+#2 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688, Array)
+#3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2015-10-11 07:38:22 Error: Fatal Error (1): Unsupported operand types in [C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\Lib\utils\utils.php, line 3688]
+2015-10-11 07:38:22 Error: [FatalErrorException] Unsupported operand types
+Request URL: /Eclipse_Luna/Cake_FM_Viewer/nodes
+Stack Trace:
+#0 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688)
+#1 [internal function]: ErrorHandler::handleError(1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688, Array)
+#2 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688, Array)
+#3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2015-10-11 07:39:05 Error: Fatal Error (1): Unsupported operand types in [C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\Lib\utils\utils.php, line 3688]
+2015-10-11 07:39:05 Error: [FatalErrorException] Unsupported operand types
+Request URL: /Eclipse_Luna/Cake_FM_Viewer/nodes
+Stack Trace:
+#0 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688)
+#1 [internal function]: ErrorHandler::handleError(1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688, Array)
+#2 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 1, 'Unsupported ope...', 'C:\\WORKS\\WS\\Ecl...', 3688, Array)
+#3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}

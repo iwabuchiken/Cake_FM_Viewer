@@ -3177,8 +3177,82 @@
 			
 		}//get_FM_Tree_G1S__V2($filename)
 
+		public static function
+		get_FM_Tree_G1S__V2($filename) {
+
+			/*******************************
+			 load xml file
+			*******************************/
+			$fname = $filename;
+				
+			$xml = simplexml_load_file($fname) or die("Error: Cannot create object");
+				
+			/*******************************
+			 1st order
+			*******************************/
+			$g1s = $xml->children();
+				
+			debug(count($g1s));
+			
+			$attrs_g1s = $g1s->attributes();
+				
+			/*******************************
+			 get: attributes => o1s
+			*******************************/
+			$attrs_g1s_ary = array();
+				
+			$tmp = array();
+				
+			foreach ($attrs_g1s as $k => $v) {
+					
+				$tmp[$k] = (string)$v;
+					
+			}//foreach ($attrs_g1s as $k => $v)
+				
+			// serial number
+			$tmp['sn'] = "g1-0";
+				
+// 			array_push($attrs_g1s_ary, $tmp);
+
+			$attrs_g1s_ary['attributes'] = $tmp;
+			
+			/*******************************
+				get: children
+			*******************************/
+			$children = $g1s->children();
+
+			$children_ary = array();
+			
+			$count = 0;
+			
+			foreach ($children as $c) {
+			
+				array_push($children_ary, $c);
+				
+			}//foreach ($children as $c)
+			
+			$attrs_g1s_ary['children'] = $children_ary;
+// 			$attrs_g1s_ary['children'] = $children;
+			
+			/*******************************
+				build: final array
+			*******************************/
+			$tmp_ary = array();
+			
+			array_push($tmp_ary, $attrs_g1s_ary);
+			
+			/*******************************
+				return
+			*******************************/
+			return $attrs_g1s_ary;
+			
+		}//get_FM_Tree_G1S__V2
+
 		/*******************************
-			if the node has no children --> return null
+			if the node has no children --> return null<br>
+			@param <b>$attrs_parent</b> used for id string<br>
+			<b>$numOf_nodes</b> used for id string<br>
+					serial number in the array of the child nodes of <b>$node</b>
 		*******************************/
 		public static function
 		fm_GetTree_Get_Children
@@ -3238,6 +3312,77 @@
 			return $attrs_new_nodes_ary;
 			
 		}//fm_GetTree_Get_Children($node, $attrs_parent)
+
+		/*******************************
+			if the node has no children --> return null<br>
+			@param <b>$attrs_parent</b> used for id string<br>
+			<b>$numOf_nodes</b> used for id string<br>
+					serial number in the array of the child nodes of <b>$node</b>
+		*******************************/
+		public static function
+		fm_GetTree_Get_Children__V2
+		($node, $parent_SN, $node_SN) {
+// 		($node, $attrs_parent, $numOf_nodes) {
+
+			/*******************************
+			 get: attributes
+			*******************************/
+			$node_attributes = $node->attributes();
+				
+			$tmp = array();
+				
+			foreach ($node_attributes as $k => $v) {
+					
+				$tmp[$k] = (string)$v;
+					
+			}//foreach ($attrs_new_nodes as $k => $v)
+				
+			/*******************************
+				get: serial number
+			*******************************/
+// 			$parent_sn = $parent_SN;
+// 			$parent_sn = $attrs_parent['sn'];
+			
+			$tmp['sn'] = Utils::fm_Get_SN($parent_SN, $node_SN);
+
+			/*******************************
+				final: attributes
+			*******************************/
+			$final_Set = array();
+			
+			$final_Set['attributes'] = $tmp;
+			
+				
+			/*******************************
+			 get: attributes => o1s
+			*******************************/
+				
+			/*******************************
+				get: children
+			*******************************/
+			$children = $node->children();
+
+			$children_ary = array();
+			
+			$count = 0;
+			
+			foreach ($children as $c) {
+			
+				array_push($children_ary, $c);
+				
+			}//foreach ($children as $c)
+			
+			$final_Set['children'] = $children;
+// 			$attrs_new_nodes_ary['children'] = $children_ary;
+// 			$attrs_new_nodes_ary['children'] = $children;
+			
+			/*******************************
+				return
+			*******************************/
+			return $final_Set;
+			
+		}//fm_GetTree_Get_Children__V2
+		
 
 		/*******************************
 			if the node has no children --> return null
@@ -3354,8 +3499,8 @@
 		public static function
 		fm_Get_G2S($g1s_set) {
 			
-			$numOf_nodes = count($g1s_set[0]['children']);
-// 			$numOf_nodes = count($g1s_set['children']);
+			$numOf_ChildNodes = count($g1s_set[0]['children']);
+// 			$numOf_ChildNodes = count($g1s_set['children']);
 			
 // 			$node_numb = 0;
 
@@ -3364,7 +3509,7 @@
 			/*******************************
 				get children
 			*******************************/
-			for ($i = 0; $i < $numOf_nodes; $i++) {
+			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
 			
 				array_push(
 					$children,
@@ -3377,7 +3522,7 @@
 						$i
 				));
 				
-			}//for ($i = 0; $i < $numOf_nodes; $i++)
+			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
 			
 			/*******************************
 				return
@@ -3394,6 +3539,204 @@
 // 			));
 			
 		}//fm_Get_G2S($g1s_set)
+		
+		/*******************************
+			@return
+			array(attriutes, children(SimpleXMLElement))<br>
+		*******************************/
+		public static function
+		fm_Get_G2S__V2($g1s_set) {
+
+			/*******************************
+				number of child nodes
+			*******************************/
+			$numOf_ChildNodes = count($g1s_set[0]['children']);
+
+			/*******************************
+				get children array
+			*******************************/
+			$children = array();
+
+			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
+			
+				array_push(
+					$children,
+					Utils::fm_GetTree_Get_Children__V2(
+// 					Utils::fm_GetTree_Get_Children(
+						$g1s_set[0]['children'][$i],
+// 						$g1s_set['children'][$i],
+						// 							$g1s_set['children'][0],
+						$g1s_set[0]['attributes']['sn'],
+// 						$g1s_set[0]['attributes'],
+// 						$g1s_set['attributes'],
+						$i
+				));
+				
+			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
+			
+			/*******************************
+				return
+			*******************************/
+			return $children;
+			
+// 			array_push(
+// 				$g2s_set,
+// 				Utils::get_FM_Tree_GetChildren(
+// 					$parent_Nodes['children'][$node_numb],
+// 					// 							$g1s_set['children'][0],
+// 					$parent_Nodes['attributes'],
+// 					$node_numb
+// 			));
+			
+		}//fm_Get_G2S__V2
+		
+		/*******************************
+			@return
+			array(attriutes, children(SimpleXMLElement))<br>
+		*******************************/
+		public static function
+		fm_Get_NewGeneration_Set($nodes_Set) {
+
+			/*******************************
+				number of nodes
+			*******************************/
+			$numOf_Nodes = count($nodes_Set);
+			
+			$final_Set = array();
+			
+			$sn = 0;
+			
+// 			debug($nodes_Set[0]['attributes']);
+
+			/*******************************
+				node 1
+			*******************************/
+			$node = $nodes_Set[0];
+			
+			debug($node['attributes']);
+			debug($node['attributes']['sn']);
+			
+			debug(Utils::fm_Get_SN($node['attributes']['sn'], 0));
+			
+			// childe nodes
+			$child_Nodes = $node['children'];
+			
+			debug("node 0: children count => ".count($child_Nodes));
+			
+			/*******************************
+				number of child nodes
+			*******************************/
+			$numOf_ChildNodes = count($child_Nodes);
+
+			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
+					
+				array_push(
+					$final_Set,
+					Utils::fm_GetTree_Get_Children__V2(
+		// 					Utils::fm_GetTree_Get_Children(
+									$child_Nodes[$i],
+									$node['attributes']['sn'],
+// 									$child_Nodes[$i]['attributes']['sn'],
+									$i
+// 									$sn
+				));
+			
+				// increment
+				$sn += 1;
+				
+			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
+					
+			debug("final set: count => ".count($final_Set));
+			
+			debug("final set (last) => ");
+			debug($final_Set[count($final_Set) - 1]['attributes']);
+			
+			/*******************************
+				node 2
+			*******************************/
+			$node = $nodes_Set[1];
+
+			debug("node set: 1");
+			debug($node['attributes']);
+			debug($node['attributes']['sn']);
+			
+			debug(Utils::fm_Get_SN($node['attributes']['sn'], 1));
+			
+			// childe nodes
+			$child_Nodes = $node['children'];
+			
+			debug("node 1: children count => ".count($child_Nodes));
+			
+			/*******************************
+				number of child nodes
+			*******************************/
+			$numOf_ChildNodes = count($child_Nodes);
+
+			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
+					
+				array_push(
+					$final_Set,
+					Utils::fm_GetTree_Get_Children__V2(
+		// 					Utils::fm_GetTree_Get_Children(
+									$child_Nodes[$i],
+									$node['attributes']['sn'],
+// 									$child_Nodes[$i]['attributes']['sn'],
+									$i
+// 									$sn
+				));
+			
+				// increment
+				$sn += 1;
+				
+			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
+					
+			debug("final set: count => ".count($final_Set));
+
+			$node_Set = $final_Set[count($final_Set) - 1];
+			
+			debug("final set (last) => ");
+			debug($node_Set['attributes']);
+			
+// 			debug("final set (last) => ".count($final_Set[count($final_Set - 1)]));
+// 			debug("final set (last) => ".$final_Set[count($final_Set - 1)]['attributes']);
+			
+// 			/**************************************************************
+// 				get children array
+// 			**************************************************************/
+// 			$children = array();
+
+// 			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
+			
+// 				array_push(
+// 					$children,
+// 					Utils::fm_GetTree_Get_Children__V2(
+// // 					Utils::fm_GetTree_Get_Children(
+// 						$nodes_Set[0]['children'][$i],
+// // 						$nodes_Set['children'][$i],
+// 						// 							$nodes_Set['children'][0],
+// 						$nodes_Set[0]['attributes']['sn'],
+// // 						$nodes_Set[0]['attributes'],
+// // 						$nodes_Set['attributes'],
+// 						$i
+// 				));
+				
+// 			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
+			
+// 			/*******************************
+// 				return
+// 			*******************************/
+// 			return $children;
+			
+// // 			array_push(
+// // 				$g2s_set,
+// // 				Utils::get_FM_Tree_GetChildren(
+// // 					$parent_Nodes['children'][$node_numb],
+// // 					// 							$nodes_Set['children'][0],
+// // 					$parent_Nodes['attributes'],
+// // 					$node_numb
+// // 			));
+			
+		}//fm_Get_NewGeneration_Set
 		
 	}//class Utils
 	

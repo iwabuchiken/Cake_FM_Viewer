@@ -17,10 +17,86 @@ class NodesController extends AppController {
 		/*******************************
 			FM tree
 		*******************************/
-		$this->_index__Get_FM_Tree();
+		$this->_index__Get_FM_Tree__V2();
+// 		$this->_index__Get_FM_Tree();
 		
 	}//index()
 
+	public function
+	_index__Get_FM_Tree__V2() {
+
+		/*******************************
+		 load xml
+		*******************************/
+		$filename = "http://benfranklin.chips.jp/FM/Research_2/Research_2.mm";
+		
+		/*******************************
+		 get: g1s
+		*******************************/
+		$g1s_set = array();
+
+		array_push($g1s_set, Utils::get_FM_Tree_G1S__V2($filename));
+		
+// 		$this->_index__Disp_NodesInfo($g1s_set);
+		
+		/*******************************
+		 get: g2s
+		*******************************/
+		$g2s_set = array();
+		
+		debug("g1s: children => ".count($g1s_set[0]['children']));	//=> 3
+// 		debug("g1s: children => ".count($g1s_set['children']));	//=> 3
+		
+		$g2s_set = Utils::fm_Get_G2S__V2($g1s_set);
+// 		$g2s_set = Utils::fm_Get_G2S($g1s_set);
+		
+		$len_g2s = count($g2s_set);
+		
+		debug("len: g2s => ".$len_g2s);
+		
+		/*******************************
+			disp: g2s
+		*******************************/
+// 		debug("displaying => g2s");
+		
+// 		$this->_index__Disp_NodesInfo($g2s_set);
+
+// 		debug("\$g2s_set[0]");
+// 		debug($g2s_set[0]);
+// 		debug($g2s_set[0]['attributes']);
+// 		debug($g2s_set[0]['children']);
+// 		debug($g2s_set[0]['children'][0]);
+// 		debug($g2s_set[0]['children'][0]->children());
+// 		debug(get_class($g2s_set[0]['children'][0]));
+		
+		/*******************************
+			get: g3s
+		*******************************/
+		$g3s_set = array();
+		
+		$node_Num = 0;
+		
+// 		$g3s_set = Utils::fm_Get_G2S__V2($g2s_set[0]);	//=> Undefined offset: 0 [APP\Lib\utils\utils.php, line 3553]
+		$g3s_set = Utils::fm_Get_G2S__V2($g2s_set);
+
+// 		$this->_index__Disp_NodesInfo($g3s_set);
+
+		/*******************************
+			get: g3s: using a new function
+		*******************************/
+		$g3s_set = Utils::fm_Get_NewGeneration_Set($g2s_set);
+		
+// 		array_push($g3s_set, 
+// 				Utils::fm_GetTree_Get_Children__FromArray(
+// // 				Utils::fm_GetTree_Get_Children(
+// 						$g2s_set[$node_Num], 
+// // 						$g2s_set[0], 
+// 						$g1s_set[0]['attributes'], 
+// 						$node_Num));
+		
+		
+	}//_index__Get_FM_Tree
+	
 	public function
 	_index__Get_FM_Tree() {
 
