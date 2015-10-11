@@ -85,15 +85,37 @@ class NodesController extends AppController {
 			get: g3s: using a new function
 		*******************************/
 		$g3s_set = Utils::fm_Get_NewGeneration_Set($g2s_set);
+
+		debug("\$g3s_set => ".count($g3s_set));	//=> 16
 		
-// 		array_push($g3s_set, 
-// 				Utils::fm_GetTree_Get_Children__FromArray(
-// // 				Utils::fm_GetTree_Get_Children(
-// 						$g2s_set[$node_Num], 
-// // 						$g2s_set[0], 
-// 						$g1s_set[0]['attributes'], 
-// 						$node_Num));
+		debug($g3s_set[0]);
 		
+		/*******************************
+			get: g4s: using a new function
+		*******************************/
+		$g4s_set = Utils::fm_Get_NewGeneration_Set($g3s_set);
+
+		debug("\$g4s_set => ".count($g4s_set));
+		
+		/*******************************
+			get: g5s: using a new function
+		*******************************/
+		$g5s_set = Utils::fm_Get_NewGeneration_Set($g4s_set);
+
+		debug("\$g5s_set => ".count($g5s_set));
+		
+		debug("\$g5s_set[0]['attributes']");
+		debug($g5s_set[0]['attributes']);
+		
+		/*******************************
+			get: g6s: using a new function
+		*******************************/
+		$g6s_set = Utils::fm_Get_NewGeneration_Set($g5s_set);
+
+		debug("\$g6s_set => ".count($g6s_set));
+		
+		debug("\$g6s_set[0]['attributes']");
+		debug($g6s_set[0]['attributes']);
 		
 	}//_index__Get_FM_Tree
 	
