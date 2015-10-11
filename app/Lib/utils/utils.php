@@ -3601,22 +3601,52 @@
 				number of nodes
 			*******************************/
 			$numOf_Nodes = count($nodes_Set);
+
+			debug("\$numOf_Nodes => $numOf_Nodes");
 			
 			$final_Set = array();
 			
 			$sn = 0;
-			
-// 			debug($nodes_Set[0]['attributes']);
 
-			/*******************************
-				node 1
-			*******************************/
-			$node = $nodes_Set[0];
+			$index = 0;
+
+			// get set
+			for ($i = 0; $i < $numOf_Nodes; $i++) {
+			
+				$final_Set = Utils::_fm_Get_NewGeneration_Set__GetGeneration(
+// 				Utils::_fm_Get_NewGeneration_Set__GetGeneration(
+								$nodes_Set, 
+// 								&$final_Set, 	//=> Call-time pass-by-reference has been removed	
+								$final_Set, 
+								$i,
+								$sn
+				);
+				
+				$sn += 1;
+
+				//debug
+				debug("\$final_Set => ".count($final_Set));
+				
+// 				$final_Set = Utils::_fm_Get_NewGeneration_Set__GetGeneration($nodes_Set, $i);
+				
+			}//for ($i = 0; $i < $numOf_Nodes; $i++)
+			
+			//debug: reset
+			$sn = 0;
+			
+			$final_Set = array();
+			
+			/**************************************************************
+				node 0
+			**************************************************************/
+			$node = $nodes_Set[$index];
+// 			$node = $nodes_Set[0];
 			
 			debug($node['attributes']);
 			debug($node['attributes']['sn']);
 			
-			debug(Utils::fm_Get_SN($node['attributes']['sn'], 0));
+			debug(Utils::fm_Get_SN($node['attributes']['sn'], $index));
+// 			debug(Utils::fm_Get_SN($node['attributes']['sn'], 0));
 			
 			// childe nodes
 			$child_Nodes = $node['children'];
@@ -3651,16 +3681,70 @@
 			debug("final set (last) => ");
 			debug($final_Set[count($final_Set) - 1]['attributes']);
 			
-			/*******************************
-				node 2
-			*******************************/
-			$node = $nodes_Set[1];
+			/**************************************************************
+				node 1
+			**************************************************************/
+			$index = 1;
+			
+			$node = $nodes_Set[$index];
+// 			$node = $nodes_Set[1];
 
 			debug("node set: 1");
 			debug($node['attributes']);
 			debug($node['attributes']['sn']);
 			
-			debug(Utils::fm_Get_SN($node['attributes']['sn'], 1));
+			debug(Utils::fm_Get_SN($node['attributes']['sn'], $index));
+// 			debug(Utils::fm_Get_SN($node['attributes']['sn'], 1));
+			
+			// childe nodes
+			$child_Nodes = $node['children'];
+			
+			debug("node 1: children count => ".count($child_Nodes));
+			
+			/*******************************
+				number of child nodes
+			*******************************/
+			$numOf_ChildNodes = count($child_Nodes);
+
+			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
+					
+				array_push(
+					$final_Set,
+					Utils::fm_GetTree_Get_Children__V2(
+		// 					Utils::fm_GetTree_Get_Children(
+									$child_Nodes[$i],
+									$node['attributes']['sn'],
+// 									$child_Nodes[$i]['attributes']['sn'],
+									$i
+// 									$sn
+				));
+			
+				// increment
+				$sn += 1;
+				
+			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
+					
+			debug("final set: count => ".count($final_Set));
+
+			$node_Set = $final_Set[count($final_Set) - 1];
+			
+			debug("final set (last) => ");
+			debug($node_Set['attributes']);
+			
+			/**************************************************************
+				node 2
+			**************************************************************/
+			$index = 2;
+			
+			$node = $nodes_Set[$index];
+// 			$node = $nodes_Set[1];
+
+			debug("node set: 1");
+			debug($node['attributes']);
+			debug($node['attributes']['sn']);
+			
+			debug(Utils::fm_Get_SN($node['attributes']['sn'], $index));
+// 			debug(Utils::fm_Get_SN($node['attributes']['sn'], 1));
 			
 			// childe nodes
 			$child_Nodes = $node['children'];
@@ -3737,6 +3821,63 @@
 // // 			));
 			
 		}//fm_Get_NewGeneration_Set
+
+		public static function
+		_fm_Get_NewGeneration_Set__GetGeneration
+// 		($nodes_Set, &$final_Set, $index, $sn) {
+		($nodes_Set, $final_Set, $index, $sn) {
+			
+			/**************************************************************
+			 node 0
+			**************************************************************/
+			$node = $nodes_Set[$index];
+			// 			$node = $nodes_Set[0];
+				
+// 			debug($node['attributes']);
+// 			debug($node['attributes']['sn']);
+				
+// 			debug(Utils::fm_Get_SN($node['attributes']['sn'], $index));
+// 			// 			debug(Utils::fm_Get_SN($node['attributes']['sn'], 0));
+				
+			// childe nodes
+			$child_Nodes = $node['children'];
+				
+			debug("node $index: children count => ".count($child_Nodes));
+				
+			/*******************************
+			 number of child nodes
+			*******************************/
+			$numOf_ChildNodes = count($child_Nodes);
+			
+			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
+					
+				array_push(
+						$final_Set,
+						Utils::fm_GetTree_Get_Children__V2(
+						// 					Utils::fm_GetTree_Get_Children(
+						$child_Nodes[$i],
+						$node['attributes']['sn'],
+						// 									$child_Nodes[$i]['attributes']['sn'],
+						$i
+						// 									$sn
+				));
+					
+				// increment
+				$sn += 1;
+			
+			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
+				
+			debug("final set: count => ".count($final_Set));
+				
+			debug("final set (last) => ");
+			debug($final_Set[count($final_Set) - 1]['attributes']);
+
+			/*******************************
+				return
+			*******************************/
+			return $final_Set;
+			
+		}//_fm_Get_NewGeneration_Set__GetGeneration
 		
 	}//class Utils
 	

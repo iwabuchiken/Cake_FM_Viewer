@@ -178,3 +178,13 @@ Stack Trace:
 #3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
 #4 [internal function]: App::shutdown()
 #5 {main}
+2015-10-12 01:05:47 Error: Fatal Error (64): Call-time pass-by-reference has been removed in [C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\app\Lib\utils\utils.php, line 3618]
+2015-10-12 01:05:47 Error: [FatalErrorException] Call-time pass-by-reference has been removed
+Request URL: /Eclipse_Luna/Cake_FM_Viewer/nodes
+Stack Trace:
+#0 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Error\ErrorHandler.php(213): ErrorHandler::handleFatalError(64, 'Call-time pass-...', 'C:\\WORKS\\WS\\Ecl...', 3618)
+#1 [internal function]: ErrorHandler::handleError(64, 'Call-time pass-...', 'C:\\WORKS\\WS\\Ecl...', 3618, Array)
+#2 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(933): call_user_func('ErrorHandler::h...', 64, 'Call-time pass-...', 'C:\\WORKS\\WS\\Ecl...', 3618, Array)
+#3 C:\WORKS\WS\Eclipse_Luna\Cake_FM_Viewer\lib\Cake\Core\App.php(906): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
