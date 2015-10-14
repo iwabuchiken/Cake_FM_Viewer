@@ -3192,7 +3192,7 @@
 			*******************************/
 			$g1s = $xml->children();
 				
-			debug(count($g1s));
+// 			debug(count($g1s));
 			
 			$attrs_g1s = $g1s->attributes();
 				
@@ -3602,7 +3602,7 @@
 			*******************************/
 			$numOf_Nodes = count($nodes_Set);
 
-			debug("\$numOf_Nodes => $numOf_Nodes");
+// 			debug("\$numOf_Nodes => $numOf_Nodes");
 			
 			$final_Set = array();
 			
@@ -3625,7 +3625,7 @@
 				$sn += 1;
 
 				//debug
-				debug("\$final_Set => ".count($final_Set));
+// 				debug("\$final_Set => ".count($final_Set));
 				
 // 				$final_Set = Utils::_fm_Get_NewGeneration_Set__GetGeneration($nodes_Set, $i);
 				
@@ -3635,195 +3635,6 @@
 				return
 			*******************************/
 			return $final_Set;
-			
-// 			//debug: reset
-// 			$sn = 0;
-			
-// 			$final_Set = array();
-			
-// 			/**************************************************************
-// 				node 0
-// 			**************************************************************/
-// 			$node = $nodes_Set[$index];
-// // 			$node = $nodes_Set[0];
-			
-// 			debug($node['attributes']);
-// 			debug($node['attributes']['sn']);
-			
-// 			debug(Utils::fm_Get_SN($node['attributes']['sn'], $index));
-// // 			debug(Utils::fm_Get_SN($node['attributes']['sn'], 0));
-			
-// 			// childe nodes
-// 			$child_Nodes = $node['children'];
-			
-// 			debug("node 0: children count => ".count($child_Nodes));
-			
-// 			/*******************************
-// 				number of child nodes
-// 			*******************************/
-// 			$numOf_ChildNodes = count($child_Nodes);
-
-// 			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
-					
-// 				array_push(
-// 					$final_Set,
-// 					Utils::fm_GetTree_Get_Children__V2(
-// 		// 					Utils::fm_GetTree_Get_Children(
-// 									$child_Nodes[$i],
-// 									$node['attributes']['sn'],
-// // 									$child_Nodes[$i]['attributes']['sn'],
-// 									$i
-// // 									$sn
-// 				));
-			
-// 				// increment
-// 				$sn += 1;
-				
-// 			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
-					
-// 			debug("final set: count => ".count($final_Set));
-			
-// 			debug("final set (last) => ");
-// 			debug($final_Set[count($final_Set) - 1]['attributes']);
-			
-// 			/**************************************************************
-// 				node 1
-// 			**************************************************************/
-// 			$index = 1;
-			
-// 			$node = $nodes_Set[$index];
-// // 			$node = $nodes_Set[1];
-
-// 			debug("node set: 1");
-// 			debug($node['attributes']);
-// 			debug($node['attributes']['sn']);
-			
-// 			debug(Utils::fm_Get_SN($node['attributes']['sn'], $index));
-// // 			debug(Utils::fm_Get_SN($node['attributes']['sn'], 1));
-			
-// 			// childe nodes
-// 			$child_Nodes = $node['children'];
-			
-// 			debug("node 1: children count => ".count($child_Nodes));
-			
-// 			/*******************************
-// 				number of child nodes
-// 			*******************************/
-// 			$numOf_ChildNodes = count($child_Nodes);
-
-// 			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
-					
-// 				array_push(
-// 					$final_Set,
-// 					Utils::fm_GetTree_Get_Children__V2(
-// 		// 					Utils::fm_GetTree_Get_Children(
-// 									$child_Nodes[$i],
-// 									$node['attributes']['sn'],
-// // 									$child_Nodes[$i]['attributes']['sn'],
-// 									$i
-// // 									$sn
-// 				));
-			
-// 				// increment
-// 				$sn += 1;
-				
-// 			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
-					
-// 			debug("final set: count => ".count($final_Set));
-
-// 			$node_Set = $final_Set[count($final_Set) - 1];
-			
-// 			debug("final set (last) => ");
-// 			debug($node_Set['attributes']);
-			
-// 			/**************************************************************
-// 				node 2
-// 			**************************************************************/
-// 			$index = 2;
-			
-// 			$node = $nodes_Set[$index];
-// // 			$node = $nodes_Set[1];
-
-// 			debug("node set: 1");
-// 			debug($node['attributes']);
-// 			debug($node['attributes']['sn']);
-			
-// 			debug(Utils::fm_Get_SN($node['attributes']['sn'], $index));
-// // 			debug(Utils::fm_Get_SN($node['attributes']['sn'], 1));
-			
-// 			// childe nodes
-// 			$child_Nodes = $node['children'];
-			
-// 			debug("node 1: children count => ".count($child_Nodes));
-			
-// 			/*******************************
-// 				number of child nodes
-// 			*******************************/
-// 			$numOf_ChildNodes = count($child_Nodes);
-
-// 			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
-					
-// 				array_push(
-// 					$final_Set,
-// 					Utils::fm_GetTree_Get_Children__V2(
-// 		// 					Utils::fm_GetTree_Get_Children(
-// 									$child_Nodes[$i],
-// 									$node['attributes']['sn'],
-// // 									$child_Nodes[$i]['attributes']['sn'],
-// 									$i
-// // 									$sn
-// 				));
-			
-// 				// increment
-// 				$sn += 1;
-				
-// 			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
-					
-// 			debug("final set: count => ".count($final_Set));
-
-// 			$node_Set = $final_Set[count($final_Set) - 1];
-			
-// 			debug("final set (last) => ");
-// 			debug($node_Set['attributes']);
-			
-// // 			debug("final set (last) => ".count($final_Set[count($final_Set - 1)]));
-// // 			debug("final set (last) => ".$final_Set[count($final_Set - 1)]['attributes']);
-			
-// // 			/**************************************************************
-// // 				get children array
-// // 			**************************************************************/
-// // 			$children = array();
-
-// // 			for ($i = 0; $i < $numOf_ChildNodes; $i++) {
-			
-// // 				array_push(
-// // 					$children,
-// // 					Utils::fm_GetTree_Get_Children__V2(
-// // // 					Utils::fm_GetTree_Get_Children(
-// // 						$nodes_Set[0]['children'][$i],
-// // // 						$nodes_Set['children'][$i],
-// // 						// 							$nodes_Set['children'][0],
-// // 						$nodes_Set[0]['attributes']['sn'],
-// // // 						$nodes_Set[0]['attributes'],
-// // // 						$nodes_Set['attributes'],
-// // 						$i
-// // 				));
-				
-// // 			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
-			
-// // 			/*******************************
-// // 				return
-// // 			*******************************/
-// // 			return $children;
-			
-// // // 			array_push(
-// // // 				$g2s_set,
-// // // 				Utils::get_FM_Tree_GetChildren(
-// // // 					$parent_Nodes['children'][$node_numb],
-// // // 					// 							$nodes_Set['children'][0],
-// // // 					$parent_Nodes['attributes'],
-// // // 					$node_numb
-// // // 			));
 			
 		}//fm_Get_NewGeneration_Set
 
@@ -3843,14 +3654,14 @@
 			// childe nodes
 			$child_Nodes = $node['children'];
 				
-			debug("node $index: children count => ".count($child_Nodes));
+// 			debug("node $index: children count => ".count($child_Nodes));
 
 			/*******************************
 				validate: any children
 			*******************************/
 			if (count($child_Nodes) < 1) {
 				
-				debug("no children => ".$node['attributes']['sn']);
+// 				debug("no children => ".$node['attributes']['sn']);
 				
 				return $final_Set;
 				
@@ -3879,30 +3690,11 @@
 			
 			}//for ($i = 0; $i < $numOf_ChildNodes; $i++)
 				
-			debug("final set: count => ".count($final_Set));
+// 			debug("final set: count => ".count($final_Set));
 				
-			debug("final set (last) => ");
+// 			debug("final set (last) => ");
 			
 			$len = count($final_Set);
-
-// 			/*******************************
-// 				report
-// 			*******************************/
-// 			if ($len > 0) {
-// // 			if ($len > 1) {
-				
-// 				$len = $len - 1;
-				
-// 				debug($final_Set[$len]['attributes']);
-				
-// 			} else {//$len > 1
-				
-// 				debug("\$final_Set => len is 0");
-				
-// 			}//$len > 1
-			
-// 			debug($final_Set[$len]['attributes']);
-// 			debug($final_Set[count($final_Set) - 1]['attributes']);
 
 			/*******************************
 				return

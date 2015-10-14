@@ -25,14 +25,38 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<?php echo $cakeDescription ?>:
 		<?php echo $this->fetch('title'); ?>
 	</title>
+		<meta name="viewport"
+           content="width=device-width,
+			user-scalable=yes,
+			initial-scale=0.30,
+			minimum-scale=0.01,
+                    maximum-scale=3.0" />
+	
 	<?php
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('cake.generic');
-
+		echo "\n";
+		echo $this->Html->css('main');
+		echo "\n";
+		
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+		
+		echo "\n";
+		echo "\n";
+		
+		echo $this->Html->script('http://code.jquery.com/jquery-1.10.2.min.js');
+		echo "\n";
+		echo $this->Html->script('main');
+		echo "\n";
+		// d3
+		echo $this->Html->script('http://d3js.org/d3.v3.min.js');
+		echo "\n";
+		
+		echo "\n";
+		
 	?>
 </head>
 <body>
@@ -45,7 +69,13 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $this->fetch('content'); ?>
+			
+			<br>
+			<?php //echo $this->element('layouts/links'); ?>
+			
 		</div>
+		
+		
 		<div id="footer">
 			<?php echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
@@ -58,6 +88,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			</p>
 		</div>
 	</div>
-	<?php echo $this->element('sql_dump'); ?>
+	<?php //echo $this->element('sql_dump'); ?>
 </body>
 </html>

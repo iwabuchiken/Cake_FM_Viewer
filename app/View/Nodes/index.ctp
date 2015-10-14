@@ -3,6 +3,14 @@
 	<br>
 </h1>
 
+<table>
+
+	<?php echo $this->element('nodes/index/index_t_headers'); ?>
+
+	<?php echo $this->element('nodes/index/index_t_entries'); ?>
+		
+</table>
+
 
 
 <br>

@@ -17,14 +17,187 @@ class NodesController extends AppController {
 		/*******************************
 			FM tree
 		*******************************/
-		$this->_index__Get_FM_Tree__V2();
+		$gens = $this->_index__Get_FM_Tree__V2();
+		
+		//debug
+		debug("\$gens => ".count($gens));
+		
+		$node_array = $this->_index__Build_Template_Data($gens);
+
+		// sort
+		//REF http://cakephp.1045679.n5.nabble.com/Using-usort-in-Cake-td1327099.html Aug 11, 2009; 9:18pm
+		$res_B = usort($node_array, array(&$this, "cmp_SN_Value"));
+// 		$res_B = usort($positions, array(&$this, "cmp_SN_Value"));
+		
+		debug("sort => ".($res_B === true ? "done" : "NOT done"));
+		
+		//debug
+		debug("\$node_array => ".count($node_array));
+
+// 		debug($node_array);
+		// 		array(
+		// 				(int) 0 => array(
+		// 						'text' => 'Research_2',
+		// 						'sn' => 'g1-0'
+		// 				), ...
+		//		)
+
+		/*******************************
+			set: vars
+		*******************************/
+		$this->set("node_array", $node_array);
+		
+// 		$this->_index__Get_FM_Tree__V2();
 // 		$this->_index__Get_FM_Tree();
 		
 	}//index()
 
+	//REF http://stackoverflow.com/questions/4282413/php-sort-array-of-objects-by-object-fields answered Nov 26 '10 at 3:53
+	public function
+	cmp_SN_Value($node1, $node2) {
+	
+		//REF http://www.php.net/manual/en/function.floatval.php
+		$val_1 = $node1['sn'];
+		$val_2 = $node2['sn'];
+// 		$val_1 = $node1['attributes']['sn'];
+// 		$val_2 = $node2['attributes']['sn'];
+// 		$val_2 = floatval($node2['Position']['point']);
+	
+		//REF http://stackoverflow.com/questions/481466/php-string-to-float answered Jan 26 '09 at 21:35
+		// 		$point_1 = (float) $pos1['Position']['point'];
+		// 		$point_2 = (float) $pos2['Position']['point'];
+	
+		return $val_1 > $val_2;
+		// 		return $point_1 < $point_2;
+	
+	}//cmp_SN_Value($pos1, $pos2)
+	
+	/*******************************
+		@return
+		array(<br>
+				(int) 0 => array(<br>
+						'text' => 'Research_2',<br>
+						'sn' => 'g1-0'<br>
+				), ...
+		)<br>
+	*******************************/
+	public function
+	_index__Build_Template_Data($gens) {
+
+// 		$gen_1 = $gens[0];
+		
+// 		debug("gen[0] => ".count($gen_1));
+		
+		$len = count($gens);
+		
+// 		for ($i = 0; $i < $len; $i++) {
+		
+// 			debug("gens[$i] => ".count($gens[$i]));
+			
+// 		}//for ($i = 0; $i < $len; $i++)
+		
+// 		/*******************************
+// 			build tmpl: gen 1
+// 		*******************************/
+// 		$gens_1 = $gens[0];
+		
+// 		$len_Gens_1 = count($gens_1);
+		
+// 		debug("\$gens_1 => ".count($gens_1));
+		
+// 		$node_array = array();
+		
+// 		for ($i = 0; $i < $len_Gens_1; $i++) {
+		
+// 			$tmp = array();
+			
+// 			$tmp['text'] = $gens_1[$i]['attributes']['TEXT'];
+// 			$tmp['sn'] = $gens_1[$i]['attributes']['sn'];
+			
+// 			array_push($node_array, $tmp);
+			
+// 		}//for ($i = 0; $i < $len_Gens_1; $i++)
+		
+// 		debug($node_array);
+		
+// 		/*******************************
+// 			build tmpl: gen 2
+// 		*******************************/
+// 		$gens_2 = $gens[1];
+		
+// 		$len_Gens_2 = count($gens_2);
+		
+// 		debug("\$gens_2 => ".count($gens_2));
+		
+// 		$node_array = array();
+		
+// 		for ($i = 0; $i < $len_Gens_2; $i++) {
+		
+// 			$tmp = array();
+			
+// 			$tmp['text'] = $gens_2[$i]['attributes']['TEXT'];
+// 			$tmp['sn'] = $gens_2[$i]['attributes']['sn'];
+			
+// 			array_push($node_array, $tmp);
+			
+// 		}//for ($i = 0; $i < $len_Gens_2; $i++)
+		
+// 		debug($node_array);
+		
+		/*******************************
+			build tmpl: gen: all
+		*******************************/
+// 		$len = 3;
+		
+		$node_array = array();
+		
+		for ($i = 0; $i < $len; $i++) {
+		
+			$gen = $gens[$i];
+			
+			$len_Gens_2 = count($gen);
+			
+// 			debug("\$gen[$i] => ".count($gen));
+			
+// 			$node_array = array();
+			
+			for ($j = 0; $j < $len_Gens_2; $j++) {
+			
+				$tmp = array();
+				
+				$tmp['text'] = $gen[$j]['attributes']['TEXT'];
+				$tmp['sn'] = $gen[$j]['attributes']['sn'];
+				
+				array_push($node_array, $tmp);
+				
+			}//for ($j = 0; $j < $len_Gens_2; $j++)
+			;
+			
+		}//for ($i = 0; $i < $len; $i++)
+		
+		//debug
+// 		debug("\$node_array => ".count($node_array));
+		
+// 		debug($node_array);
+		
+		/*******************************
+			return
+		*******************************/
+		return $node_array;
+		
+// 		debug($gen_1[0]['attributes']);
+// 		debug($gen_1['attributes']);
+		
+	}//_index__Build_Template_Data($gens)
+	
 	public function
 	_index__Get_FM_Tree__V2() {
 
+		/*******************************
+			array: generations
+		*******************************/
+		$gens = array();
+		
 		/*******************************
 		 load xml
 		*******************************/
@@ -39,12 +212,15 @@ class NodesController extends AppController {
 		
 // 		$this->_index__Disp_NodesInfo($g1s_set);
 		
+		// gens
+		array_push($gens, $g1s_set);
+		
 		/*******************************
 		 get: g2s
 		*******************************/
 		$g2s_set = array();
 		
-		debug("g1s: children => ".count($g1s_set[0]['children']));	//=> 3
+// 		debug("g1s: children => ".count($g1s_set[0]['children']));	//=> 3
 // 		debug("g1s: children => ".count($g1s_set['children']));	//=> 3
 		
 		$g2s_set = Utils::fm_Get_G2S__V2($g1s_set);
@@ -52,22 +228,9 @@ class NodesController extends AppController {
 		
 		$len_g2s = count($g2s_set);
 		
-		debug("len: g2s => ".$len_g2s);
+// 		debug("len: g2s => ".$len_g2s);
 		
-		/*******************************
-			disp: g2s
-		*******************************/
-// 		debug("displaying => g2s");
-		
-// 		$this->_index__Disp_NodesInfo($g2s_set);
-
-// 		debug("\$g2s_set[0]");
-// 		debug($g2s_set[0]);
-// 		debug($g2s_set[0]['attributes']);
-// 		debug($g2s_set[0]['children']);
-// 		debug($g2s_set[0]['children'][0]);
-// 		debug($g2s_set[0]['children'][0]->children());
-// 		debug(get_class($g2s_set[0]['children'][0]));
+		array_push($gens, $g2s_set);
 		
 		/*******************************
 			get: g3s
@@ -76,46 +239,63 @@ class NodesController extends AppController {
 		
 		$node_Num = 0;
 		
-// 		$g3s_set = Utils::fm_Get_G2S__V2($g2s_set[0]);	//=> Undefined offset: 0 [APP\Lib\utils\utils.php, line 3553]
-		$g3s_set = Utils::fm_Get_G2S__V2($g2s_set);
+// 		$g3s_set = Utils::fm_Get_G2S__V2($g2s_set);
 
-// 		$this->_index__Disp_NodesInfo($g3s_set);
-
+// 		array_push($gens, $g3s_set);
+		
 		/*******************************
 			get: g3s: using a new function
 		*******************************/
 		$g3s_set = Utils::fm_Get_NewGeneration_Set($g2s_set);
 
-		debug("\$g3s_set => ".count($g3s_set));	//=> 16
+// 		debug("\$g3s_set => ".count($g3s_set));	//=> 16
 		
-		debug($g3s_set[0]);
+// 		debug($g3s_set[0]);
+		
+		array_push($gens, $g3s_set);
 		
 		/*******************************
 			get: g4s: using a new function
 		*******************************/
 		$g4s_set = Utils::fm_Get_NewGeneration_Set($g3s_set);
 
-		debug("\$g4s_set => ".count($g4s_set));
+// 		debug("\$g4s_set => ".count($g4s_set));
+		
+		array_push($gens, $g4s_set);
 		
 		/*******************************
 			get: g5s: using a new function
 		*******************************/
 		$g5s_set = Utils::fm_Get_NewGeneration_Set($g4s_set);
 
-		debug("\$g5s_set => ".count($g5s_set));
+// 		debug("\$g5s_set => ".count($g5s_set));
 		
-		debug("\$g5s_set[0]['attributes']");
-		debug($g5s_set[0]['attributes']);
+// 		debug("\$g5s_set[0]['attributes']");
+// 		debug($g5s_set[0]['attributes']);
+		
+		array_push($gens, $g5s_set);
 		
 		/*******************************
 			get: g6s: using a new function
 		*******************************/
 		$g6s_set = Utils::fm_Get_NewGeneration_Set($g5s_set);
 
-		debug("\$g6s_set => ".count($g6s_set));
+		array_push($gens, $g6s_set);
 		
-		debug("\$g6s_set[0]['attributes']");
-		debug($g6s_set[0]['attributes']);
+// 		debug("\$g6s_set => ".count($g6s_set));
+		
+// 		debug("\$g6s_set[0]['attributes']");
+// 		debug($g6s_set[0]['attributes']);
+		
+// 		//debug
+// 		debug("\$gens => ".count($gens));
+		
+// 		debug(array_keys($gens));
+		
+		/*******************************
+			return
+		*******************************/
+		return $gens;
 		
 	}//_index__Get_FM_Tree
 	
