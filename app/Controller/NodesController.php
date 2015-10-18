@@ -1049,5 +1049,127 @@ class NodesController extends AppController {
 // 		debug($xml);
 		
 	}//show_mm__V2
+
+	/*******************************
+		ftp FM files
+	*******************************/
+	public function
+	ftp_Upload_FM_Files() {
+		
+		$ftp_server = "ftp.benfranklin.chips.jp";
+		
+		$conn_id = ftp_connect($ftp_server);
+		
+// 		ftp_close($conn_id);
+		
+		/*******************************
+			connect
+		*******************************/
+		$ftp_user_name = "chips.jp-benfranklin";
+		$ftp_user_pass = "9x9jh4";
+		
+		//ref http://php.net/manual/en/ftp.examples-basic.php
+		$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+		
+		debug("\$login_result => ".($login_result === true ? "done" : "NOT done"));
+// 		debug("\$login_result => ".get_class($login_result));
+// 		debug("\$login_result => ".$login_result);
+		
+		/*******************************
+			get: dir list
+		*******************************/
+		//ref http://stackoverflow.com/questions/6747065/accessing-an-ftp-directory-listing-with-php answered Jul 19 '11 at 12:33
+// 		$r = ftp_rawlist($conn_id, "/FM/Research_2");
+		$r = ftp_rawlist($conn_id, "/FM");
+// 		$r = ftp_rawlist($ftp, "/FM");
+// 		$r = ftp_rawlist($ftp, "/pub/time.series/la/");
+		
+// 		debug($r);
+		// 		(int) 0 => 'drwxr-xr-x 192 chips.jp-benfranklin LolipopUser     4096 Oct 12 08:41 .',
+		// 		(int) 1 => 'drwx---r-x  32 chips.jp-benfranklin LolipopUser     4096 Oct 13 16:54 ..',
+		// 		(int) 2 => 'drwxr-xr-x   7 chips.jp-benfranklin LolipopUser     4096 Oct  3 16:29 .git',
+		// 		(int) 3 => '-rw-r--r--   1 chips.jp-benfranklin LolipopUser      134 Oct  3 15:54 .gitignore',
+		// 		(int) 4 => 'drwxr-xr-x   2 chips.jp-benfranklin LolipopUser     4096 Oct  3 15:54 AI',
+		
+		// other metod
+		//ref http://php.net/manual/en/function.ftp-nlist.php
+		$contents = ftp_nlist($conn_id, "/FM");
+		
+// 		debug($contents);
+		// 		(int) 0 => '/FM/Cabvas',
+		// 		(int) 1 => '/FM/Admin',
+		// 		(int) 2 => '/FM/IFM9',
+		// 		(int) 3 => '/FM/GT2',
+		// 		(int) 4 => '/FM/TC2(Java)',
+
+// 		$dpath = "$ftp_server/FM2";
+		$dpath = "$ftp_server/FM";
+		
+		debug("dpath => $dpath");
+		
+		$ftp_path = "ftp://$ftp_user_name:$ftp_user_pass@$dpath";	//=> w
+// 		$ftp_path = "ftp://$ftp_user_name:$ftp_user_pass@$ftp_server/FM";
+		
+		debug("\$ftp_path => $ftp_path");
+		
+		//ref http://codereview.stackexchange.com/questions/24578/is-dir-function-for-ftp-ftps-connections asked Mar 31 '13 at 22:42
+		//ref http://stackoverflow.com/questions/1554346/how-to-check-using-php-ftp-functionality-if-folder-exists-on-server-or-not answered Oct 12 '09 at 12:42
+		$res = is_dir($ftp_path);
+// 		$res = is_dir($dpath);
+// 		$res = is_dir("ftp://$ftp_user_name:$ftp_user_pass@$dpath");
+// 		$res = is_dir("ftp://$ftp_user_name:$ftp_user_pass@$ftp_server/FM2");	//=> 'res => is NOT dir'
+// 		$res = is_dir("ftp://$ftp_user_name:$ftp_user_pass@$ftp_server/FM");	//=> 'res => is dir'
+// 		$res = is_dir('ftp://user:password@example.com/some/dir/path');
+
+		debug("res => ".($res === true ? "is dir" : "is NOT dir"));
+// 		debug("res => ".($res === true ? "is dir" : "is NOT dir")."($dpath)");
+		
+		/*******************************
+			locale
+		*******************************/
+		//ref http://stackoverflow.com/questions/2505681/timezone-conversion-in-php answered Mar 24 '10 at 6:11
+		date_default_timezone_set('Asia/Tokyo');	//=> w
+// 		date_default_timezone_set('UTC');
+
+// 		//ref http://php.net/manual/en/function.setlocale.php
+		//ref http://stackoverflow.com/questions/3191664/list-of-all-locales-and-their-short-codes answered Feb 25 '13 at 4:21
+// 		setlocale(LC_ALL, 'ja-JP');		//=> n/w
+// 		setlocale(LC_ALL, 'nl_NL');
+		
+		/*******************************
+			get: last modified
+		*******************************/
+		$fpath = "/cake_apps/Cake_FM_Viewer/app/Controller/NodesController.php";
+// 		$fpath = "/FM/Research_2//Research_2.mm";
+		
+		//ref http://www.w3schools.com/php/func_ftp_mdtm.asp
+		$lastchanged = ftp_mdtm($conn_id, $fpath);
+		
+		if ($lastchanged != -1)
+		{
+			//ref http://jp2.php.net/manual/en/function.date.php 
+			debug("$fpath was last modified on : \n" 
+					. date("Y-m-d H:i:s.",$lastchanged));
+// 			debug("$fpath was last modified on : \n" . date("m d Y H:i:s.",$lastchanged));
+// 			debug("$fpath was last modified on : \n" . date("F d Y H:i:s.",$lastchanged));
+// 			debug("$fpath was last modified on : " . date("F d Y H:i:s.",$lastchanged));
+// 			echo "$file was last modified on : " . date("F d Y H:i:s.",$lastchanged);
+		}
+		else
+		{
+		echo "Could not get last modified";
+		}
+		
+		/*******************************
+			close
+		*******************************/
+		ftp_close($conn_id);
+		
+		/*******************************
+			message
+		*******************************/
+		debug("ftp => closed");
+		
+	}//ftp_Upload_FM_Files
 	
 }//class ArticlesController extends AppController
